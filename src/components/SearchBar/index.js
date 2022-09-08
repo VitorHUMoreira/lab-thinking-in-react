@@ -1,6 +1,10 @@
-function SearchBar({ search, setSearch }) {
+function SearchBar({ search, setSearch, stock, setStock }) {
   function handleChange(e) {
     setSearch(e.target.value);
+  }
+
+  function handleCheck() {
+    setStock(!stock);
   }
 
   return (
@@ -12,7 +16,7 @@ function SearchBar({ search, setSearch }) {
         type="search"
         className="search-input"
       />
-      <input type="checkbox" id="stock" />
+      <input onChange={handleCheck} type="checkbox" id="stock" />
       <label htmlFor="stock">Only show products in stock</label>
     </div>
   );

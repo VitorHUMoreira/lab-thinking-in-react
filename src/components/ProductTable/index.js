@@ -1,6 +1,6 @@
 import ProductRow from '../ProductRow';
 
-function ProductTable({ products, search }) {
+function ProductTable({ products, search, stock }) {
   return (
     <div className="table-container">
       <table>
@@ -12,16 +12,32 @@ function ProductTable({ products, search }) {
         </thead>
 
         <tbody>
-          {products
-            .filter((product) => {
-              return (
-                product.name.toLowerCase().includes(search.toLowerCase()) ||
-                product.price.includes(search.toLowerCase())
-              );
-            })
-            .map((product) => {
-              return <ProductRow key={product.name} product={product} />;
-            })}
+          {stock &&
+            products
+              .filter((product) => {
+                return product.inStock === stock;
+              })
+              .filter((product) => {
+                return (
+                  product.name.toLowerCase().includes(search.toLowerCase()) ||
+                  product.price.includes(search.toLowerCase())
+                );
+              })
+              .map((product) => {
+                return <ProductRow key={product.name} product={product} />;
+              })}
+
+          {!stock &&
+            products
+              .filter((product) => {
+                return (
+                  product.name.toLowerCase().includes(search.toLowerCase()) ||
+                  product.price.includes(search.toLowerCase())
+                );
+              })
+              .map((product) => {
+                return <ProductRow key={product.name} product={product} />;
+              })}
         </tbody>
       </table>
     </div>
